@@ -1,0 +1,9 @@
+parameters:
+    level: 9
+    ignoreErrors:
+    excludePaths:
+        - */vendor/**
+    paths:
+        - src
+        - tests
+        - config

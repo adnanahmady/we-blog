@@ -7,6 +7,9 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/doctrine-bundle": "^2.8",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.14",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
         "symfony/flex": "^2",
@@ -15,6 +18,13 @@
         "symfony/yaml": "6.2.*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.15",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "6.2.*",
+        "symfony/css-selector": "6.2.*",
+        "symfony/maker-bundle": "^1.48",
+        "symfony/phpunit-bridge": "^6.2"
     },
     "config": {
         "allow-plugins": {
@@ -44,6 +54,16 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+        "fix": [
+            "php-cs-fixer --verbose --diff fix $(pwd)",
+            "phpstan --configuration=$(pwd)/phpstan.neon analyse"
+        ],
+        "test": [
+            "XDEBUG_MODE=trace phpunit --stop-on-error --stop-on-defect --colors=always"
+        ],
+        "final-test": [
+            "XDEBUG_MODE=off phpunit --stop-on-error --stop-on-defect --colors=always"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
