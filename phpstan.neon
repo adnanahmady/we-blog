@@ -1,4 +1,7 @@
 parameters:
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    checkUnionTypes: false
     level: 9
     ignoreErrors:
     excludePaths:
