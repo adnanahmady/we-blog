@@ -8,20 +8,29 @@ trait MigrateDatabaseTrait
 
     public function setUpMigrateDatabase(): void
     {
-        $this->recreateDatabase();
-        $this->executeCommand('doctrine:migrations:migrate');
+        $this->createDatabase();
+        $this->migrateMigrations();
     }
 
     public function tearDownMigrateDatabase(): void
     {
-        $this->executeCommand('doctrine:migrations:rollup');
+        $this->dropDatabase();
     }
 
-    private function recreateDatabase(): void
+    private function dropDatabase(): void
     {
         $this->executeCommand('doctrine:database:drop', [
             '--force' => true,
         ]);
+    }
+
+    private function createDatabase(): void
+    {
         $this->executeCommand('doctrine:database:create');
+    }
+
+    private function migrateMigrations(): void
+    {
+        $this->executeCommand('doctrine:migrations:migrate');
     }
 }

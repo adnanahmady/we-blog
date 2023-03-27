@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class CommandExecutioner
 {
     public function __construct(
-        readonly private KernelInterface $kernel
+        readonly private KernelInterface $bootedKernel
     ) {
     }
 
@@ -24,14 +24,15 @@ class CommandExecutioner
 
     private function findCommand(string $command): Command
     {
-        $this->kernel->boot();
-        $application = new Application($this->kernel);
+        $application = new Application($this->bootedKernel);
 
         return $application->find($command);
     }
 
-    private function executeCommand(Command $command, array $options): void
-    {
+    private function executeCommand(
+        Command $command,
+         array $options
+    ): void {
         $tester = new CommandTester($command);
         $tester->execute($options);
     }

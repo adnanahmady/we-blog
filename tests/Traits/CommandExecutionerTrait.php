@@ -18,6 +18,8 @@ trait CommandExecutionerTrait
 
     private function getExecutioner(): CommandExecutioner
     {
-        return new CommandExecutioner($this->createKernel());
+        return new CommandExecutioner(
+            bootedKernel: $this->bootKernel()
+        );
     }
 }
