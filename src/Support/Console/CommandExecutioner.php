@@ -31,7 +31,7 @@ class CommandExecutioner
 
     private function executeCommand(
         Command $command,
-         array $options
+        array $options
     ): void {
         $tester = new CommandTester($command);
         $tester->execute($options);

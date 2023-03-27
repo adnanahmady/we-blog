@@ -14,11 +14,29 @@ class GetTest extends BaseApiTestCase
     use HasFactoryTrait;
 
     /** @test */
+    public function post_fields_should_be_in_snake_case(): void
+    {
+        $response = $this->request();
+
+        array_map(
+            fn ($post) => $this->assertArrayHasKeys([
+                'id',
+                'title',
+                'slug',
+                'body',
+                'image',
+                'published_at',
+                'author_id',
+                'created_at',
+                'updated_at',
+            ], $post),
+            $response->toArray()['data']
+        );
+    }
+
+    /** @test */
     public function user_can_get_posts(): void
     {
-        $this->factory(Post::class)
-            ->setCount(2)
-            ->create();
         $response = $this->request();
 
         $this->assertResponseIsSuccessful();
@@ -31,5 +49,14 @@ class GetTest extends BaseApiTestCase
             'GET',
             '/api/v1/posts'
         );
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->factory(Post::class)
+            ->setCount(2)
+            ->create();
     }
 }
